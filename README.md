@@ -1,15 +1,18 @@
 # cinema-assets
 Public CDN for AI video pipeline reference images (Pipeline C — modules/video-cinematico/)
 
-## Motion graphics (`motion/`)
+## Estúdio de vídeo com IA
 
-Vídeos escritos como código e renderizados de forma determinística (HTML → Playwright → ffmpeg).
+Vídeos escritos em código e renderizados quadro a quadro: **HyperFrames** (HTML + GSAP → MP4), **Three.js** (3D),
+**Replicate** (imagens/clipes de apoio), **ElevenLabs** (trilha) e revisão por crítico independente.
 
 ```bash
-npm install
-npm run new-scene -- minha-cena 9x16 10
-npm run sheet  -- motion/scenes/minha-cena.html   # QA visual
-npm run render -- motion/scenes/minha-cena.html   # motion/out/minha-cena.mp4
+npm install                                   # o hook de sessão já faz isso na web
+tools/new-video.sh <cliente> <video> portrait # cria clientes/<cliente>/videos/<video>
+cd clientes/<cliente>/videos/<video>
+npx hyperframes check && npx hyperframes snapshot --frames 12
+npx hyperframes render --fps 60 -q delivery
 ```
 
-Detalhes e boas práticas: `.claude/skills/motion-graphics/SKILL.md`.
+Processo completo: `.claude/skills/video-agencia/SKILL.md` · operação contínua: `docs/hermes-agencia.md`.
+Alternativa 2D leve: `motion/` (`npm run motion:render -- motion/scenes/<cena>.html`).

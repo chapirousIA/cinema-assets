@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// Cria uma cena nova a partir do molde: npm run new-scene -- <nome> [9x16|16x9|1x1|4x5] [duração]
+// Cria uma cena nova a partir do molde: npm run motion:new -- <nome> [9x16|16x9|1x1|4x5] [duração]
 import fs from 'node:fs';
 import path from 'node:path';
 
 const FORMATS = { '9x16': [1080, 1920], '16x9': [1920, 1080], '1x1': [1080, 1080], '4x5': [1080, 1350] };
 const [name, fmt = '9x16', dur = '8'] = process.argv.slice(2);
 if (!name || !FORMATS[fmt]) {
-  console.error('Uso: npm run new-scene -- <nome> [9x16|16x9|1x1|4x5] [duração em s]');
+  console.error('Uso: npm run motion:new -- <nome> [9x16|16x9|1x1|4x5] [duração em s]');
   process.exit(1);
 }
 const [w, h] = FORMATS[fmt];

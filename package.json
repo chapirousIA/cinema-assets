@@ -1,13 +1,18 @@
 {
   "name": "cinema-assets",
   "version": "1.0.0",
-  "description": "CDN de referências + pipeline de motion graphics (HTML → Playwright → ffmpeg)",
+  "description": "CDN de referências + estúdio de vídeo com IA (HyperFrames, Three.js, Replicate, ElevenLabs)",
   "scripts": {
-    "render": "node motion/scripts/render.mjs",
-    "draft": "node motion/scripts/render.mjs --draft",
-    "sheet": "node motion/scripts/render.mjs --sheet 12",
-    "preview": "node motion/scripts/serve.mjs",
-    "new-scene": "node motion/scripts/new-scene.mjs"
+    "video:new": "tools/new-video.sh",
+    "video:vendor": "tools/vendor-sync.sh",
+    "gen": "node tools/replicate-gen.mjs",
+    "music": "node tools/elevenlabs-music.mjs",
+    "hf": "hyperframes",
+    "motion:render": "node motion/scripts/render.mjs",
+    "motion:draft": "node motion/scripts/render.mjs --draft",
+    "motion:sheet": "node motion/scripts/render.mjs --sheet 12",
+    "motion:preview": "node motion/scripts/serve.mjs",
+    "motion:new": "node motion/scripts/new-scene.mjs"
   },
   "repository": {
     "type": "git",
@@ -25,7 +30,10 @@
     "@fontsource/outfit": "5.3.0",
     "ffmpeg-static": "5.3.0",
     "gsap": "3.15.0",
-    "playwright": "1.56.1"
+    "hyperframes": "0.8.94",
+    "playwright": "1.56.1",
+    "replicate": "1.4.0",
+    "three": "0.186.1"
   },
   "private": true,
   "type": "module"

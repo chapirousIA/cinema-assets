@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Newsreader"; src: url("assets/fonts/newsreader-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+      @font-face { font-family: "Newsreader"; src: url("assets/fonts/newsreader-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-latin-300-normal.woff2") format("woff2"); font-weight: 300; }
+      @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0f2c3c; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Outfit", sans-serif; color: #f3ece4; }
+      .bg { position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 45%, #174a66 0%, #0f2c3c 50%, #081a24 100%); }
+      #three-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .head { position: absolute; left: 96px; right: 96px; top: 300px; }
+      .kicker { font-weight: 600; font-size: 32px; letter-spacing: 0.28em; text-transform: uppercase; color: #e8631c; }
+      .title { margin-top: 36px; font-family: "Newsreader", serif; font-size: 104px; line-height: 1.02; letter-spacing: -0.02em; }
+      .title em { font-style: italic; color: #b97047; }
+      .label { position: absolute; left: 760px; width: 300px; font-weight: 600; font-size: 38px; }
+      .label span { display: block; font-weight: 300; font-size: 26px; opacity: 0.75; margin-top: 6px; }
+      .label::before { content: ""; position: absolute; left: -64px; top: 24px; width: 48px; height: 2px; background: #b97047; }
+      .foot { position: absolute; left: 96px; right: 96px; bottom: 300px; font-weight: 300; font-size: 34px; line-height: 1.35; }
+      .foot b { font-weight: 600; color: #e8631c; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7" data-width="1080" data-height="1920">
+      <div class="bg"></div>
+      <canvas id="three-layer"></canvas>
+      <div class="head">
+        <div class="kicker" id="kicker">Dívida ativa da União</div>
+        <div class="title" id="title">O que compõe <em>o seu débito</em></div>
+      </div>
+      <div class="label" id="l0" style="top: 1318px">Principal<span>tributo originário</span></div>
+      <div class="label" id="l1" style="top: 1128px">Multa<span>de ofício ou de mora</span></div>
+      <div class="label" id="l2" style="top: 938px">Juros<span>Selic acumulada</span></div>
+      <div class="label" id="l3" style="top: 748px">Encargos<span>legais da inscrição</span></div>
+      <div class="foot" id="foot">Na transação, descontos alcançam <b>acréscimos</b>. O principal não é reduzido (Lei nº 13.988/2020, art. 11, §2º, I).</div>
+    </div>
+
+    <script type="module">
+      import * as THREE from "./assets/vendor/three.module.js";
+
+      const W = 1080, H = 1920;
+      const canvas = document.getElementById("three-layer");
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(W, H, false);
+      renderer.setPixelRatio(1);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+      scene.add(new THREE.HemisphereLight(0xfff4e8, 0x0b2230, 1.6));
+      const key = new THREE.DirectionalLight(0xffffff, 1.4);
+      key.position.set(4, 6, 5);
+      scene.add(key);
+
+      // Camadas do débito, de baixo (principal) para cima (encargos)
+      const colors = [0xf3ece4, 0xb97047, 0xc98a62, 0xe8631c];
+      const layers = colors.map((c, i) => {
+        const m = new THREE.Mesh(
+          new THREE.BoxGeometry(1.7, 0.26, 1.7),
+          new THREE.MeshStandardMaterial({ color: c, roughness: 0.55, metalness: 0.05 }),
+        );
+        const edges = new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), new THREE.LineBasicMaterial({ color: 0x0f2c3c }));
+        m.add(edges);
+        scene.add(m);
+        return m;
+      });
+
+      const clamp = (x) => Math.min(1, Math.max(0, x));
+      const outExpo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
+      const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+      function renderAt(t) {
+        // pilha compacta → explode em camadas (1.2–3.2s), encargos/juros/multa sobem mais
+        const open = inOut(clamp((t - 1.2) / 2.0));
+        layers.forEach((m, i) => {
+          const enter = outExpo(clamp((t - 0.2 - i * 0.12) / 0.9));
+          m.position.set(0, -1.3 + i * 0.28 + open * i * 0.42 + (1 - enter) * 2, 0);
+          m.rotation.y = 0.75 + t * 0.12;
+          m.material.opacity = enter;
+          m.material.transparent = enter < 1;
+        });
+        // câmera com intenção: aproxima e desce levemente enquanto abre
+        const cam = inOut(clamp(t / 7));
+        camera.position.set(4.6 - cam * 0.5, 3.4 - cam * 0.5, 13.5 - cam * 1.0);
+        camera.lookAt(0.3, 0.1, 0);
+        renderer.render(scene, camera);
+      }
+      window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+      renderAt(window.__hfThreeTime || 0);
+    </script>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#kicker", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.1)
+        .fromTo("#title", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.25)
+        .fromTo(["#l0", "#l1", "#l2", "#l3"], { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out", stagger: 0.18 }, 2.6)
+        .fromTo("#foot", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, 4.1);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

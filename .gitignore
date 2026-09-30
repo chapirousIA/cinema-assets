@@ -1,2 +1,11 @@
 node_modules/
 motion/out/
+# projetos de vídeo: saídas e cópias locais de libs/fontes (recriadas por tools/vendor-sync.sh)
+clientes/**/renders/
+clientes/**/snapshots/
+clientes/**/assets/vendor/
+clientes/**/assets/fonts/
+clientes/**/.hyperframes/
+# mídia pesada do cliente fica no Drive; aqui só o README de inventário
+clientes/**/footage/*
+!clientes/**/footage/README.md
