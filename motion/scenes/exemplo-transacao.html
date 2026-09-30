@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Exemplo — Transação Tributária (9:16)</title>
+<link rel="stylesheet" href="/motion/lib/brand.css">
+<style>
+  .bg { position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 20%, #16405a 0%, var(--navy) 45%, var(--navy-deep) 100%); }
+  svg.waves { position: absolute; inset: 0; }
+  .grain { position: absolute; inset: 0; opacity: .06; background-image: repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px); mix-blend-mode: overlay; }
+  .block { position: absolute; left: 96px; right: 96px; }
+  .kicker { font: 600 34px/1 var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--laranja); }
+  .h1 { font: 400 124px/1.02 var(--serif); color: var(--creme); letter-spacing: -.02em; }
+  .h1 em { font-style: italic; color: var(--terracota); }
+  .word { display: inline-block; will-change: transform, opacity; }
+  .rule { height: 4px; background: linear-gradient(90deg, var(--laranja), var(--terracota)); transform-origin: left; }
+  .sub { font: 300 44px/1.3 var(--sans); color: var(--creme); opacity: .9; }
+  .card { display: flex; align-items: center; gap: 36px; padding: 44px 48px; margin-bottom: 28px;
+          border: 1.5px solid rgba(243,236,228,.18); border-left: 6px solid var(--terracota);
+          background: linear-gradient(90deg, rgba(243,236,228,.07), rgba(243,236,228,.02)); }
+  .card .n { font: 400 88px/1 var(--serif); color: var(--laranja); width: 80px; }
+  .card .t { font: 600 46px/1.15 var(--sans); color: var(--creme); }
+  .card .d { font: 300 32px/1.3 var(--sans); color: var(--creme); opacity: .75; margin-top: 8px; }
+  .brand { font: 400 76px/1.05 var(--serif); color: var(--creme); }
+  .brand small { display: block; font: 600 30px/1 var(--sans); letter-spacing: .32em; color: var(--terracota); margin-top: 22px; }
+  .cta { display: inline-block; margin-top: 72px; padding: 34px 56px; background: var(--laranja); color: var(--branco);
+         font: 600 44px/1 var(--sans); letter-spacing: .02em; border-radius: 4px; }
+  .disc { position: absolute; left: 96px; right: 96px; bottom: 88px; font: 400 24px/1.4 var(--sans); color: var(--creme); opacity: .55; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bg"></div>
+  <svg class="waves" viewBox="0 0 1080 1920" preserveAspectRatio="none"></svg>
+  <div class="grain"></div>
+
+  <!-- Cena 1: gancho -->
+  <div class="block" id="s1" style="top: 760px">
+    <div class="kicker" id="k1">Passivo federal</div>
+    <div class="h1" id="h1" style="margin-top:48px">Dívida ativa<br>com a <em>União?</em></div>
+  </div>
+
+  <!-- Cena 2: tese -->
+  <div class="block" id="s2" style="top: 690px">
+    <div class="kicker">Existe caminho negociado</div>
+    <div class="h1" style="margin-top:48px">Transação<br><em>Tributária</em></div>
+    <div class="rule" id="rule2" style="margin:56px 0 44px; width: 420px"></div>
+    <div class="sub">Lei nº 13.988/2020 e editais<br>e portarias da PGFN vigentes.</div>
+  </div>
+
+  <!-- Cena 3: método -->
+  <div class="block" id="s3" style="top: 560px">
+    <div class="kicker" style="margin-bottom:64px">Como trabalhamos</div>
+    <div class="card"><div class="n">1</div><div><div class="t">Diagnóstico do passivo</div><div class="d">Inscrições, fase e composição da dívida</div></div></div>
+    <div class="card"><div class="n">2</div><div><div class="t">Enquadramento</div><div class="d">Modalidades disponíveis para o seu perfil</div></div></div>
+    <div class="card"><div class="n">3</div><div><div class="t">Estratégia</div><div class="d">Prazo, entrada e segurança jurídica</div></div></div>
+  </div>
+
+  <!-- Cena 4: assinatura + CTA -->
+  <div class="block" id="s4" style="top: 800px">
+    <div class="brand">Fábio Pedrosa<small>ADVOGADOS · TRIBUTÁRIO</small></div>
+    <div class="cta" id="cta">Agende uma análise</div>
+  </div>
+  <div class="disc" id="disc">Conteúdo informativo. Condições de transação dependem do edital ou portaria vigente e da análise individual do caso.</div>
+</div>
+
+<script type="module">
+  import { gsap } from '/node_modules/gsap/index.js';
+  import { defineScene, lerp, rng } from '/motion/lib/scene.js';
+
+  // Split de palavras para animação tipográfica
+  for (const el of document.querySelectorAll('.h1')) {
+    el.innerHTML = el.innerHTML.replace(/(<[^>]+>)|([^\s<]+)/g, (m, tag, w) => tag ?? `<span class="word">${w}</span>`);
+  }
+
+  const tl = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1 } });
+  gsap.set(['#s2', '#s3', '#s4', '#disc'], { autoAlpha: 0 });
+
+  // 0.0–2.4 gancho
+  tl.from('#k1', { y: 30, autoAlpha: 0, duration: .8 }, .15)
+    .from('#s1 .word', { yPercent: 110, autoAlpha: 0, rotate: 4, stagger: .09 }, .3)
+    .to('#s1', { autoAlpha: 0, y: -60, duration: .6, ease: 'power2.in' }, 2.3)
+  // 2.6–5.2 tese
+    .set('#s2', { autoAlpha: 1 }, 2.7)
+    .from('#s2 .kicker', { y: 30, autoAlpha: 0, duration: .8 }, 2.7)
+    .from('#s2 .word', { yPercent: 110, autoAlpha: 0, stagger: .1 }, 2.8)
+    .from('#rule2', { scaleX: 0, duration: 1.1, ease: 'power3.inOut' }, 3.3)
+    .from('#s2 .sub', { y: 24, autoAlpha: 0, duration: .9 }, 3.6)
+    .to('#s2', { autoAlpha: 0, y: -60, duration: .6, ease: 'power2.in' }, 5.3)
+  // 5.6–8.4 método
+    .set('#s3', { autoAlpha: 1 }, 5.7)
+    .from('#s3 .kicker', { y: 30, autoAlpha: 0, duration: .8 }, 5.7)
+    .from('#s3 .card', { x: -80, autoAlpha: 0, stagger: .22, duration: .9 }, 5.85)
+    .to('#s3', { autoAlpha: 0, y: -60, duration: .6, ease: 'power2.in' }, 8.4)
+  // 8.8–11 assinatura + CTA
+    .set('#s4', { autoAlpha: 1 }, 8.9)
+    .from('#s4 .brand', { y: 40, autoAlpha: 0, duration: 1 }, 8.9)
+    .from('#cta', { scale: .85, autoAlpha: 0, duration: .8, ease: 'back.out(1.6)' }, 9.4)
+    .to('#disc', { autoAlpha: .55, duration: .8 }, 9.6)
+    .to({}, { duration: 1.4 }, 9.8); // respiro final
+
+  // Fundo: linhas de onda (símbolo do escritório) desenhadas deterministicamente por t
+  const svg = document.querySelector('svg.waves');
+  const r = rng(7);
+  const lines = Array.from({ length: 14 }, (_, i) => ({
+    y: 180 + i * 120, amp: 18 + r() * 34, freq: 1.2 + r() * 1.4, phase: r() * 6.28,
+    speed: .25 + r() * .35, color: i % 5 === 2 ? 'var(--laranja)' : 'var(--terracota)', op: .10 + r() * .16,
+  }));
+  svg.innerHTML = lines.map(() => '<path fill="none" stroke-width="1.6"/>').join('');
+  const paths = [...svg.querySelectorAll('path')];
+
+  function render(t) {
+    lines.forEach((l, i) => {
+      let d = '';
+      for (let x = -20; x <= 1100; x += 20) {
+        const y = l.y + Math.sin(x / 1080 * Math.PI * 2 * l.freq + l.phase + t * l.speed * 2) * l.amp;
+        d += (x === -20 ? 'M' : 'L') + x + ' ' + y.toFixed(1);
+      }
+      const p = paths[i];
+      p.setAttribute('d', d);
+      p.setAttribute('stroke', l.color);
+      p.setAttribute('opacity', (l.op * Math.min(1, t / 1.2)).toFixed(3));
+      p.style.transform = `translateY(${lerp(0, -40, t / 11.2).toFixed(1)}px)`;
+    });
+  }
+
+  defineScene({ width: 1080, height: 1920, fps: 30, timeline: tl, render });
+</script>
+</body>
+</html>

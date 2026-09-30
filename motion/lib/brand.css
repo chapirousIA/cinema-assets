@@ -1,0 +1,24 @@
+/* Identidade Fábio Pedrosa Advogados — fontes locais via @fontsource (sem CDN no render) */
+@import url('/node_modules/@fontsource/newsreader/400.css');
+@import url('/node_modules/@fontsource/newsreader/400-italic.css');
+@import url('/node_modules/@fontsource/newsreader/600.css');
+@import url('/node_modules/@fontsource/outfit/300.css');
+@import url('/node_modules/@fontsource/outfit/400.css');
+@import url('/node_modules/@fontsource/outfit/600.css');
+@import url('/node_modules/@fontsource/inter/400.css');
+@import url('/node_modules/@fontsource/inter/600.css');
+
+:root {
+  --navy: #0F2C3C;
+  --navy-deep: #081a24;
+  --terracota: #B97047;
+  --laranja: #E8631C;
+  --creme: #F3ECE4;
+  --branco: #FFFFFF;
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'Outfit', 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--navy); }
+body { font-family: var(--sans); color: var(--creme); -webkit-font-smoothing: antialiased; }
+.stage { position: relative; width: var(--w); height: var(--h); overflow: hidden; }
