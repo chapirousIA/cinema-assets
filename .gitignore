@@ -9,3 +9,5 @@ clientes/**/.hyperframes/
 # mídia pesada do cliente fica no Drive; aqui só o README de inventário
 clientes/**/footage/*
 !clientes/**/footage/README.md
+# clones de referência (repositórios externos, ~1 GB)
+repos/
