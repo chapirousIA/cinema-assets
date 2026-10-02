@@ -19,3 +19,22 @@
 | Áudio −22,5 LUFS (média) | Loudnorm 2 passadas → −14,0 LUFS, pico −1,0 dBFS |
 
 Resultado v2: **7,2% congelado** · −14,0 LUFS · `check` sem erros.
+
+## Rodada 2 — crítico independente sobre v2 (nota 6/10)
+Obs.: as folhas da v2 saíram duplicadas (bug do `-update 1` no ffmpeg) — criado `tools/review-sheets.sh` com carimbo de tempo e checagem de duplicatas.
+
+| Achado (gravidade) | Correção na v3 |
+|---|---|
+| Texto secundário pequeno para celular (alta) | Notas 34 px, subtítulos 32, selos 26 ("REDUTÍVEL"/"IRREDUTÍVEL"), etapas 52/37 |
+| Transição do gancho "anda para trás" e salto de 1 quadro em 2,817 s (alta) | CDA avança contra a câmera (escala 6,5×) e corta no creme da laje "principal": câmera 3D começa colada nela e recua; sem rotationX (fim do salto) |
+| 1º quadro vazio (média) | Kicker e CDAs já visíveis em t=0 |
+| Metade inferior vazia na cena 4 (média) | Etapas distribuídas até ~1400 px; linha até 1470 px |
+| Dissoluções em dupla exposição em 10,3 e 15,5 s (média) | Pilha sai subindo (direcional) antes do anel entrar; anel cresce de baixo; dados saem para cima |
+| Seguras 8,4–15 s e camadas que "só escurecem" (média) | Acréscimos encolhem 42% (largura) e 55% (altura) em 1,6 s; rotação do anel e respiração dos números |
+| Contador exibe "60" (baixa) | Meses contam de 100→145 |
+| Pontos da grade embolam (baixa) | Pulso 1,45→1,22 |
+| Mini-CDA tapa nós (baixa) | Linha movida para x=240; mini-CDA corre à esquerda |
+| Sem sombra de contato no 3D (baixa) | Sombra radial sob a pilha |
+| Vazio 20,3–21 s e cartão "fantasma" duplo | Mini-CDA chega ao centro em 20,4 s e é trocada no mesmo quadro pelo cartão final (mesmo tamanho/posição) |
+
+Resultado v3: 5,5% congelado fora da placa final (12,5% contando a placa de CTA) · −14,0 LUFS · `check` sem erros.

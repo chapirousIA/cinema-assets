@@ -74,7 +74,8 @@ telas de leitura intencionais como o CTA final).
 
 ## 5. Gauntlet loop (crítico independente)
 
-Depois de cada render completo, dispare um **subagente novo** (Agent tool, sem histórico da
+Gere as folhas para o crítico com `tools/review-sheets.sh renders/<v>.mp4 review/<versão>` (carimbo
+de tempo por quadro; aborta se houver folhas duplicadas). Depois de cada render completo, dispare um **subagente novo** (Agent tool, sem histórico da
 construção) com o prompt de `references/prompts.md` → "Crítico". Ele recebe: contact-sheets /
 quadros extraídos (`ffmpeg -vf fps=4`), o brief, o storyboard e as referências. Corrija **o
 maior problema**, renderize e repita. Pare quando as correções ficarem pequenas (tipicamente
@@ -84,8 +85,9 @@ maior problema**, renderize e repita. Pare quando as correções ficarem pequena
 
 Trilha pelo **cliente final**, não pelo "hype": serviço/advocacia → piano suave, violão limpo,
 batida calma. `node tools/elevenlabs-music.mjs "<prompt>" --seconds <dur> --out assets/audio/trilha-a.mp3`
-(gere **duas opções**). SFX: poucos, limpos, só nos momentos-chave, sempre abaixo da música
-(registry do HyperFrames / `/media-use`). Mix calmo de web (~ -16 LUFS):
+(gere **duas opções**). Sem ElevenLabs: trilha provisória com
+`python3 tools/synth-bed.py --seconds <dur> --chord-len <s> --out trilha.wav` (troca de acorde alinhada aos cortes; marcar como provisória). SFX: poucos, limpos, só nos momentos-chave, sempre abaixo da música
+(registry do HyperFrames / `/media-use`). Loudness final de Reels/Stories: −14 LUFS, pico −1 dBTP (loudnorm 2 passadas). Mix calmo de web (~ -16 LUFS):
 `tools/mix-web.sh video.mp4 trilha.mp3 final.mp4` ou `/hyperframes-audio`.
 
 ## 7. Entrega (oferta padrão)

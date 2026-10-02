@@ -26,7 +26,7 @@
       .h1 em, .h2 em { font-style: italic; color: #cf8a5f; }
       .h2 { position: absolute; left: 96px; right: 96px; font-family: "Newsreader", serif; font-size: 84px; line-height: 1.05; letter-spacing: -0.015em; }
       .w { display: inline-block; }
-      .note { position: absolute; left: 96px; right: 96px; font-weight: 300; font-size: 31px; line-height: 1.38; color: var(--creme); opacity: 0.9; }
+      .note { position: absolute; left: 96px; right: 96px; font-weight: 300; font-size: 34px; line-height: 1.38; color: var(--creme); opacity: 0.9; }
       .note b { font-weight: 600; opacity: 1; }
 
       /* CDA (objeto condutor) */
@@ -43,9 +43,9 @@
 
       /* cena 2 rótulos */
       .label { position: absolute; left: 800px; width: 270px; font-weight: 600; font-size: 40px; }
-      .label span { display: block; font-weight: 300; font-size: 28px; opacity: 0.85; margin-top: 2px; }
+      .label span { display: block; font-weight: 300; font-size: 32px; opacity: 0.9; margin-top: 2px; }
       .label::before { content: ""; position: absolute; left: -64px; top: 23px; width: 48px; height: 2px; background: var(--terra); }
-      .tag { display: inline-block; white-space: nowrap; margin-top: 10px; padding: 6px 10px; font-weight: 600; font-size: 21px; letter-spacing: .02em; text-transform: uppercase; border-radius: 3px; }
+      .tag { display: inline-block; white-space: nowrap; margin-top: 10px; padding: 6px 10px; font-weight: 600; font-size: 26px; letter-spacing: .04em; text-transform: uppercase; border-radius: 3px; }
       .tag.off { background: var(--laranja); color: #fff; }
       .tag.lock { border: 2px solid var(--creme); color: var(--creme); }
 
@@ -57,16 +57,16 @@
       .dot { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: var(--terra); }
 
       /* cena 4 método */
-      .step { position: absolute; left: 290px; right: 80px; }
+      .step { position: absolute; left: 320px; right: 70px; }
       .step .n { font-family: "Newsreader", serif; font-style: italic; font-size: 34px; color: var(--laranja); }
-      .step .t { font-weight: 600; font-size: 48px; margin-top: 4px; }
-      .step .d { font-weight: 300; font-size: 33px; opacity: .85; margin-top: 6px; }
-      .node { position: absolute; left: 136px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--terra); background: var(--navy); }
+      .step .t { font-weight: 600; font-size: 52px; margin-top: 4px; }
+      .step .d { font-weight: 300; font-size: 37px; opacity: .85; margin-top: 6px; }
+      .node { position: absolute; left: 226px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--terra); background: var(--navy); }
       .node i { position: absolute; inset: 5px; border-radius: 50%; background: var(--laranja); }
-      .pulse { position: absolute; left: 136px; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--laranja); opacity: 0; }
+      .pulse { position: absolute; left: 226px; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--laranja); opacity: 0; }
       .cta div { position: relative; overflow: hidden; }
       #shine { position: absolute; top: 0; bottom: 0; left: 0; width: 120px; background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); }
-      #mini { position: absolute; left: 60px; top: 0; width: 180px; height: 116px; }
+      #mini { position: absolute; left: 30px; top: 0; width: 180px; height: 116px; }
       #mini .cda { width: 180px; height: 116px; padding: 14px 16px; box-shadow: 0 10px 24px rgba(0,0,0,.4); }
       #mini .cda .t { font-size: 10px; letter-spacing: .1em; } #mini .cda .ln { height: 7px; margin-top: 10px; }
 
@@ -108,11 +108,11 @@
       <div class="layer" id="s2">
         <div class="kicker" style="top: 300px">Anatomia do débito</div>
         <div class="h2" id="h2" style="top: 360px">O que compõe <em>a dívida</em></div>
-        <div class="label" id="l3" style="top: 688px">Encargos<span>legais da inscrição</span><div class="tag off">desconto possível</div></div>
-        <div class="label" id="l2" style="top: 878px">Juros<span>Selic acumulada</span><div class="tag off">desconto possível</div></div>
-        <div class="label" id="l1" style="top: 1068px">Multa<span>de ofício ou de mora</span><div class="tag off">desconto possível</div></div>
-        <div class="label" id="l0" style="top: 1258px">Principal<span>tributo originário</span><div class="tag lock">não é reduzido</div></div>
-        <div class="note" id="n2" style="top: 1452px">Descontos só em multa, juros e encargos de créditos irrecuperáveis ou de difícil recuperação. <b>Lei nº 13.988/2020, art. 11, I e §2º, I.</b></div>
+        <div class="label" id="l3" style="top: 688px">Encargos<span>legais da inscrição</span><div class="tag off">redutível</div></div>
+        <div class="label" id="l2" style="top: 878px">Juros<span>Selic acumulada</span><div class="tag off">redutível</div></div>
+        <div class="label" id="l1" style="top: 1068px">Multa<span>de ofício ou mora</span><div class="tag off">redutível</div></div>
+        <div class="label" id="l0" style="top: 1258px">Principal<span>tributo originário</span><div class="tag lock">irredutível</div></div>
+        <div class="note" id="n2" style="top: 1440px">Descontos só em multa, juros e encargos de créditos irrecuperáveis ou de difícil recuperação. <b>Lei nº 13.988/2020, art. 11, I e §2º, I.</b></div>
       </div>
 
       <!-- CENA 3: teto legal -->
@@ -135,15 +135,15 @@
       <div class="layer" id="s4">
         <div class="kicker" id="k4" style="top: 330px">Como trabalhamos</div>
         <svg style="position:absolute; inset:0" width="1080" height="1920">
-          <line id="track" x1="150" y1="470" x2="150" y2="1330" stroke="rgba(185,112,71,.8)" stroke-width="3" stroke-dasharray="860" stroke-dashoffset="860" />
+          <line id="track" x1="240" y1="470" x2="240" y2="1470" stroke="rgba(185,112,71,.8)" stroke-width="3" stroke-dasharray="1000" stroke-dashoffset="1000" />
         </svg>
-        <div class="node" id="nd0" style="top: 556px"><i></i></div>
-        <div class="node" id="nd1" style="top: 856px"><i></i></div>
-        <div class="node" id="nd2" style="top: 1156px"><i></i></div>
-        <div class="pulse" id="pu1" style="top: 1156px"></div><div class="pulse" id="pu2" style="top: 1156px"></div>
-        <div class="step" id="st0" style="top: 520px"><div class="n">01</div><div class="t">Diagnóstico do passivo</div><div class="d">Inscrições, fases e garantias</div></div>
-        <div class="step" id="st1" style="top: 820px"><div class="n">02</div><div class="t">Enquadramento</div><div class="d">Modalidade adequada ao perfil</div></div>
-        <div class="step" id="st2" style="top: 1120px"><div class="n">03</div><div class="t">Estratégia</div><div class="d">Proposta, adesão ou defesa</div></div>
+        <div class="node" id="nd0" style="top: 596px"><i></i></div>
+        <div class="node" id="nd1" style="top: 966px"><i></i></div>
+        <div class="node" id="nd2" style="top: 1336px"><i></i></div>
+        <div class="pulse" id="pu1" style="top: 1336px"></div><div class="pulse" id="pu2" style="top: 1336px"></div>
+        <div class="step" id="st0" style="top: 560px"><div class="n">01</div><div class="t">Diagnóstico do passivo</div><div class="d">Inscrições, fases e garantias</div></div>
+        <div class="step" id="st1" style="top: 930px"><div class="n">02</div><div class="t">Enquadramento</div><div class="d">Modalidade adequada ao perfil</div></div>
+        <div class="step" id="st2" style="top: 1300px"><div class="n">03</div><div class="t">Estratégia</div><div class="d">Proposta, adesão ou defesa</div></div>
         <div id="mini"><div class="cda"><div class="t">CERTIDÃO DE DÍVIDA ATIVA</div><div class="ln" style="width:90%; margin-top:10px"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:80%"></div></div></div>
       </div>
 
@@ -174,7 +174,7 @@
       <audio id="sfx-click" src="assets/sfx/click-soft.mp3" data-start="7.2" data-track-index="12" data-volume="0.2"></audio>
       <audio id="sfx-ping" src="assets/sfx/ping.mp3" data-start="13.4" data-track-index="13" data-volume="0.14"></audio>
       <audio id="sfx-whoosh2" src="assets/sfx/whoosh-short.mp3" data-start="15.45" data-track-index="14" data-volume="0.18"></audio>
-      <audio id="sfx-chime" src="assets/sfx/chime.mp3" data-start="21.6" data-track-index="15" data-volume="0.16"></audio>
+      <audio id="sfx-chime" src="assets/sfx/chime.mp3" data-start="21.1" data-track-index="15" data-volume="0.16"></audio>
     </div>
 
     <script type="module">
@@ -213,6 +213,11 @@
         return m;
       });
       const dim = new THREE.Color(0x3a4d58);
+      const sc = document.createElement("canvas"); sc.width = sc.height = 128;
+      const g = sc.getContext("2d"); const rg = g.createRadialGradient(64, 64, 4, 64, 64, 64);
+      rg.addColorStop(0, "rgba(0,0,0,0.55)"); rg.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = rg; g.fillRect(0, 0, 128, 128);
+      const shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 3.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+      shadow.rotation.x = -Math.PI / 2; shadow.position.y = -1.45; scene.add(shadow);
 
       // ---------- grade de 145 parcelas ----------
       const grid = document.getElementById("grid");
@@ -242,39 +247,41 @@
         const lt = t - 3.4;
         if (lt > -0.1 && lt < 7.4) {
           const open = inOut(clamp((lt - 0.9) / 1.8));
-          const squeeze = inOut(clamp((t - 7.2) / 1.0));
+          const squeeze = inOut(clamp((t - 7.2) / 1.6));
           layers.forEach((m, i) => {
-            const enter = outExpo(clamp((lt - 0.05 - i * 0.12) / 0.9));
-            const bob = Math.sin(lt * 2.1 + i * 0.9) * 0.035 * open;
+            const enter = i === 0 ? 1 : outExpo(clamp((lt - 0.55 - i * 0.16) / 0.8));
+            const bob = Math.sin(lt * 2.1 + i * 0.9) * 0.035 * open + Math.pow(clamp((t - 9.75) / 0.55), 2) * (3 + i * 0.8);
             m.position.set(0, -1.3 + i * 0.28 + open * i * 0.42 + (1 - enter) * 2.2 + bob, 0);
             m.rotation.y = 0.95 + lt * 0.05;
             m.visible = enter > 0.001;
             m.material.opacity = 1;
             if (i > 0) {
-              m.scale.set(1 - squeeze * 0.12, 1 - squeeze * 0.62, 1 - squeeze * 0.12);
+              m.scale.set(1 - squeeze * 0.42, 1 - squeeze * 0.55, 1 - squeeze * 0.42);
               m.material.color.setHex(baseColors[i]).lerp(dim, squeeze * 0.55);
             }
           });
           const cam = inOut(clamp(lt / 3.2));
-          const back = inOut(clamp((t - 9.6) / 1.0)); // recua na saída
-          camera.position.set(4.6 - cam * 0.5, 3.4 - cam * 0.5 + back * 1.5, 13.5 - cam * 1.0 + back * 7);
-          camera.lookAt(0.55, -0.12, 0);
+          const pull = inOut(clamp((lt - 0.05) / 1.35)); // de colado na laje creme até o enquadramento
+          const back = inOut(clamp((t - 9.75) / 0.6));   // saída: câmera sobe e recua
+          const nx = 4.6 - cam * 0.5, ny = 3.4 - cam * 0.5 + back * 3, nz = 13.5 - cam * 1.0 + back * 6;
+          camera.position.set(lerp(0.05, nx, pull), lerp(0.25, ny, pull), lerp(0.9, nz, pull));
+          camera.lookAt(lerp(0, 0.55, pull), lerp(-1.17, -0.12, pull), 0);
           renderer.render(scene, camera);
         }
 
         // contadores (cena 3)
-        const p = outExpo(clamp((t - 11.0) / 1.6));
+        const p = outExpo(clamp((t - 10.45) / 1.6));
         document.getElementById("pctv").textContent = Math.round(70 * p);
         document.getElementById("arc").setAttribute("stroke-dashoffset", (879.6 * (1 - 0.7 * p)).toFixed(1));
-        const q = clamp((t - 12.0) / 1.5);
-        document.getElementById("mesv").textContent = Math.round(145 * outExpo(q));
+        const q = clamp((t - 11.25) / 1.5);
+        document.getElementById("mesv").textContent = Math.round(100 + 45 * outExpo(q));
         const lit = Math.floor(145 * q);
-        const wave = clamp((t - 13.3) / 0.4);
+        const wave = clamp((t - 12.8) / 0.4);
         dots.forEach((d, i) => {
           d.style.opacity = i < lit ? 1 : 0.18;
           const col = i % 29;
           const k = wave * Math.max(0, Math.sin(t * 4.2 - col * 0.32));
-          d.style.transform = `scale(${(1 + 0.45 * k).toFixed(3)})`;
+          d.style.transform = `scale(${(1 + 0.22 * k).toFixed(3)})`;
           d.style.background = k > 0.6 ? "#e8631c" : "#b97047";
         });
       }
@@ -303,20 +310,20 @@
       tl.set(["#s2", "#s3", "#s4", "#s5"], { opacity: 0 }, 0);
 
       // ===== CENA 1 (0–3,5) =====
-      tl.fromTo("#k1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.0)
+      tl.fromTo("#k1", { opacity: 0.35, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.0)
         .fromTo("#h1 .w", { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, duration: 0.8, ease: E, stagger: 0.07 }, 0.05)
-        .fromTo(".pcard", { opacity: 0, y: -260, rotation: (i) => spots[i][2] * 2 }, { opacity: 0.55, y: 0, rotation: (i) => spots[i][2], duration: 1.0, ease: "power3.out", stagger: 0.06 }, 0.0)
+        .fromTo(".pcard", { opacity: 0.3, y: -200, rotation: (i) => spots[i][2] * 2 }, { opacity: 0.55, y: 0, rotation: (i) => spots[i][2], duration: 1.0, ease: "power3.out", stagger: 0.06 }, 0.0)
         .fromTo("#cda", { opacity: 0, y: 140, rotation: -4 }, { opacity: 1, y: 0, rotation: -2, duration: 0.9, ease: "back.out(1.4)" }, 0.55)
         .to("#cda", { scale: 1.06, y: -24, rotation: -1, duration: 1.3, ease: "none" }, 1.45)
-        .to("#pile", { y: 30, duration: 2.0, ease: "none" }, 0.8)
+        .to("#pile", { y: -20, duration: 2.0, ease: "none" }, 0.8)
         // a CDA avança contra a câmera e vira a transição
-        .to("#cda", { x: -130, y: 70, rotationX: 64, rotation: 22, scale: 0.62, transformPerspective: 1400, duration: 0.7, ease: "power3.inOut" }, 2.75)
+        .to("#cda", { y: -180, rotation: 0, scale: 6.5, duration: 0.6, ease: "power3.in" }, 2.75)
         .to(["#k1", "#h1", ".pcard"], { opacity: 0, y: -50, duration: 0.45, ease: "power2.in" }, 2.8)
-        .to("#cda", { opacity: 0, duration: 0.25, ease: "none" }, 3.4)
+        .to("#cda", { opacity: 0, duration: 0.18, ease: "none" }, 3.36)
         .set("#s1", { opacity: 0 }, 3.55);
 
       // ===== CENA 2 (3,4–10,6) =====
-      tl.to("#three-wrap", { opacity: 1, duration: 0.25, ease: "none" }, 3.3)
+      tl.to("#three-wrap", { opacity: 1, duration: 0.12, ease: "none" }, 3.3)
         .set("#s2", { opacity: 1 }, 3.4)
         .fromTo("#s2 .kicker", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.6)
         .fromTo("#h2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: E }, 3.7)
@@ -324,20 +331,22 @@
         .fromTo(".label .tag", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.1 }, 7.25)
         .fromTo("#n2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, 7.7)
         .to(["#s2 .kicker", "#h2", ".label", "#n2"], { opacity: 0, y: -90, duration: 0.4, ease: "power3.in", stagger: 0.03 }, 9.85)
-        .to("#three-wrap", { opacity: 0, duration: 0.6, ease: "power1.in" }, 9.9)
+        .to("#three-wrap", { opacity: 0, duration: 0.15, ease: "none" }, 10.25)
         .set("#s2", { opacity: 0 }, 10.6);
 
       // ===== CENA 3 (10,4–15,6) =====
-      tl.set("#s3", { opacity: 1 }, 10.1)
-        .fromTo("#k3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 10.25)
-        .fromTo("#ring", { opacity: 0, scale: 2.4, x: 160, y: 520, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.9, ease: E }, 10.15)
-        .fromTo("#pct", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 10.55)
-        .fromTo("#pctcap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 11.3)
-        .fromTo("#grid", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 11.7)
-        .fromTo("#mes", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 11.9)
-        .fromTo("#mescap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 12.4)
-        .fromTo("#n3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, 13.0)
-        .to(["#k3", "#ring", "#pct", "#pctcap", "#mes", "#mescap", "#n3"], { opacity: 0, y: -110, duration: 0.4, ease: "power3.in", stagger: 0.025 }, 15.1)
+      tl.set("#s3", { opacity: 1 }, 10.3)
+        .fromTo("#k3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 10.3)
+        .fromTo("#ring", { opacity: 0, scale: 0.4, x: 0, y: 260, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.7, ease: "back.out(1.3)" }, 10.3)
+        .fromTo("#pct", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 10.4)
+        .fromTo("#pctcap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 10.75)
+        .fromTo("#grid", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 11.1)
+        .fromTo("#mes", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 11.2)
+        .fromTo("#mescap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 11.5)
+        .fromTo("#n3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, 12.3)
+        .fromTo("#ring", { rotation: 0 }, { rotation: 8, duration: 2.6, ease: "sine.inOut" }, 12.4)
+        .fromTo(["#pct", "#mes"], { scale: 1 }, { scale: 1.04, transformOrigin: "0% 50%", duration: 2.4, ease: "sine.inOut" }, 12.6)
+        .to(["#k3", "#ring", "#pct", "#pctcap", "#mes", "#mescap", "#n3"], { opacity: 0, y: -110, duration: 0.38, ease: "power3.in", stagger: 0.02 }, 15.0)
         .to("#grid", { scaleX: 0.04, x: -380, y: -560, transformOrigin: "0% 50%", opacity: 0, duration: 0.55, ease: "power3.inOut" }, 15.15)
         .set("#s3", { opacity: 0 }, 15.8);
 
@@ -348,7 +357,7 @@
         .fromTo(".step", { opacity: 0, x: 50 }, { opacity: 0.38, x: 0, duration: 0.6, ease: E, stagger: 0.08 }, 15.65)
         .fromTo(".node", { opacity: 0, scale: 0.3 }, { opacity: 0.35, scale: 0.7, duration: 0.5, ease: E, stagger: 0.08 }, 15.7)
         .to("#track", { strokeDashoffset: 0, duration: 3.6, ease: "power1.inOut" }, 16.0)
-        .to("#mini", { y: 1280, duration: 3.6, ease: "power1.inOut" }, 16.0);
+        .to("#mini", { y: 1420, duration: 3.6, ease: "power1.inOut" }, 16.0);
       [0, 1, 2].forEach((k) => {
         const at = 16.0 + [0.55, 1.75, 2.95][k];
         tl.to(`#nd${k}`, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.5)" }, at)
@@ -357,15 +366,17 @@
       });
       tl.fromTo(["#pu1", "#pu2"], { scale: 1, opacity: 0.7 }, { scale: 3.2, opacity: 0, duration: 0.9, ease: "power2.out", stagger: 0.45 }, 19.15)
         .to("#mini", { rotation: 4, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 19.2);
-      tl.to(["#k4", "#track", ".node", ".step"], { opacity: 0, x: -30, duration: 0.35, ease: "power2.in" }, 20.2)
-        .to("#mini", { x: 390, y: 767, scale: 2.2, rotation: 0, duration: 0.5, ease: "power3.inOut" }, 20.45)
-        .to("#mini", { opacity: 0, duration: 0.15, ease: "none" }, 20.95)
+      tl.to(["#k4", "#track", ".node", ".step"], { opacity: 0, x: -30, duration: 0.3, ease: "power2.in" }, 19.95)
+        .to("#mini", { x: 420, y: 767, scale: 2.2, rotation: 0, duration: 0.45, ease: "power3.inOut" }, 19.95)
+        .set("#mini", { opacity: 0 }, 20.4)
         .set("#s4", { opacity: 0 }, 21.1);
 
       // ===== CENA 5 (21,0–25) =====
-      tl.set("#s5", { opacity: 1 }, 20.95)
-        .fromTo("#flip", { opacity: 0, scale: 0.62, rotationY: 0, transformPerspective: 1600 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 20.95)
-        .to("#flip", { rotationY: 180, duration: 1.0, ease: "power3.inOut" }, 21.35)
+      tl.set("#flip", { opacity: 0 }, 0)
+        .set("#s5", { opacity: 1 }, 20.4)
+        .set("#flip", { opacity: 1, scale: 0.62, rotationY: 0, transformPerspective: 1600 }, 20.4)
+        .to("#flip", { scale: 1, duration: 0.45, ease: "power3.out" }, 20.4)
+        .to("#flip", { rotationY: 180, duration: 1.0, ease: "power3.inOut" }, 20.85)
         .fromTo("#cta", { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.7)" }, 22.25)
         .fromTo("#n5", { opacity: 0 }, { opacity: 0.92, duration: 0.8, ease: "none" }, 22.7)
         .fromTo("#shine", { x: -160 }, { x: 560, duration: 0.9, ease: "power2.inOut", repeat: 1, repeatDelay: 0.6 }, 22.9)
