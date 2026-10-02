@@ -38,3 +38,16 @@ Obs.: as folhas da v2 saíram duplicadas (bug do `-update 1` no ffmpeg) — cria
 | Vazio 20,3–21 s e cartão "fantasma" duplo | Mini-CDA chega ao centro em 20,4 s e é trocada no mesmo quadro pelo cartão final (mesmo tamanho/posição) |
 
 Resultado v3: 5,5% congelado fora da placa final (12,5% contando a placa de CTA) · −14,0 LUFS · `check` sem erros.
+
+## Rodada 3 — crítico independente sobre v3 (nota 7/10; sem saltos de 1 quadro)
+| Achado (gravidade) | Correção na v4/v5 |
+|---|---|
+| Rótulos colados na borda direita, sob os ícones do Reels (alta) | Layout espelhado: rótulos à esquerda (alinhados à direita), pilha 3D à direita |
+| Saída da cena 2: pilha atravessa o título, rótulos descolados (alta) | Título sai antes (9,5 s); rótulos sobem e somem junto; sombra apaga com a pilha |
+| ~0,2 s de creme chapado e título sobre o close (média) | Recuo da câmera em ease-out (revela a laje de imediato); título da cena só em 4,25 s |
+| Nó 03 aceso antes da hora (média) | Bug: `fromTo` renderizava os pulsos no início → `immediateRender: false` |
+| Quadro vazio em 15,3–15,7 e "fade para nada" (média) | Saída da cena 3 mais cedo (ease suave) + cena 4 entra em 15,08 s enquanto a faixa de parcelas escorre para a linha |
+| Gancho ~2 s parado (média) | Título com leve zoom + deriva das CDAs |
+| Ponto parado 15,5–16,2 s (métrica v4) | Linha e mini-CDA começam em 15,55 s |
+
+Resultado v5: **8,1% congelado fora da placa de CTA** · −14,0 LUFS / −1,0 dBFS · `check` sem erros.
