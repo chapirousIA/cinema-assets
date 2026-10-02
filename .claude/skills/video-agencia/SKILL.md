@@ -13,6 +13,10 @@ Regras técnicas de composição: carregue `/hyperframes` e `/hyperframes-core` 
 HTML; `/hyperframes-animation` → `adapters/three.md` para 3D; `/hyperframes-audio` para mixagem.
 Esta skill define **o processo e o padrão de qualidade**; as skills oficiais definem a sintaxe.
 
+**Série semanal de Reels:** use os subagentes de `.claude/agents/` na ordem de
+`docs/equipe-agentes-instagram.md` (pauta-roteiro → revisor-oab → diretor-storyboard → montagem →
+critico-qa → legenda-distribuicao → aprovação humana).
+
 ## 0. Entrada (pasta do cliente)
 
 `clientes/<cliente>/` contém `brief.md`, `brand/`, `footage/` (aprovada), `refs/` e `videos/`.

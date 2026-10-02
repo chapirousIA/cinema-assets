@@ -7,6 +7,7 @@ Três funções:
 
 ## Para qualquer pedido de vídeo
 Siga a skill **`video-agencia`** (`.claude/skills/video-agencia/SKILL.md`) — processo, padrão de qualidade e compliance OAB.
+Produção recorrente (5 Reels/semana): equipe de agentes em `.claude/agents/` (`pauta-roteiro`, `revisor-oab`, `diretor-storyboard`, `critico-qa`, `legenda-distribuicao`) — fluxo, portões humanos e orçamento em `docs/equipe-agentes-instagram.md`.
 Sintaxe de composição: skills oficiais `/hyperframes`, `/hyperframes-core`, `/hyperframes-animation` (plugin `hyperframes@hyperframes`).
 
 Outros kits instalados:
