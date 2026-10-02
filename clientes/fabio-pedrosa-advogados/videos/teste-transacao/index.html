@@ -323,11 +323,11 @@
         // a CDA avança contra a câmera e vira a transição
         .to("#cda", { y: -180, rotation: 0, scale: 6.5, duration: 0.6, ease: "power3.in" }, 2.75)
         .to(["#k1", "#h1", ".pcard"], { opacity: 0, y: -50, duration: 0.45, ease: "power2.in" }, 2.8)
-        .to("#cda", { opacity: 0, duration: 0.18, ease: "none" }, 3.36)
+        .set("#cda", { opacity: 0 }, 3.36)
         .set("#s1", { opacity: 0 }, 3.55);
 
       // ===== CENA 2 (3,4–10,6) =====
-      tl.to("#three-wrap", { opacity: 1, duration: 0.12, ease: "none" }, 3.3)
+      tl.set("#three-wrap", { opacity: 1 }, 3.36)
         .set("#s2", { opacity: 1 }, 3.4)
         .fromTo("#s2 .kicker", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 4.25)
         .fromTo("#h2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: E }, 4.35)

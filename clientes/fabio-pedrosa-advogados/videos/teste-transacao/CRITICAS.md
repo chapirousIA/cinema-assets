@@ -51,3 +51,15 @@ Resultado v3: 5,5% congelado fora da placa final (12,5% contando a placa de CTA)
 | Ponto parado 15,5–16,2 s (métrica v4) | Linha e mini-CDA começam em 15,55 s |
 
 Resultado v5: **8,1% congelado fora da placa de CTA** · −14,0 LUFS / −1,0 dBFS · `check` sem erros.
+
+## Rodada 4 — crítico independente sobre v5 (nota 7/10; **nenhum item de gravidade alta**)
+- Corrigido na v6 (final): transição CDA → 3D sem dupla exposição (corte seco creme→creme em 3,36 s).
+- Pendentes conhecidos (média/baixa), para a próxima versão:
+  1. Borda direita da pilha 3D chega a x≈1050 (sob a coluna de ícones do Reels) — recuar a pilha exige reenquadrar a cena 2.
+  2. Cena 4 ainda é a mais "lista": metade direita vazia; mini-CDA pequena e perto da borda esquerda.
+  3. Resíduo da grade de parcelas na saída da cena 3; fusão turva na saída do 3D (10,1–10,3 s).
+  4. Onda laranja na grade de 145 pode ser lida como dado → trocar por pulso uniforme ou rotular.
+  5. 3D básico (sem chanfro/textura).
+- Encerrado pelo critério do gauntlet: correções restantes pequenas; compliance e precisão jurídica conferidas por 4 críticos.
+
+Final: `renders/fp_transacao-tributaria_teste_9x16.mp4` — 1080×1920, 60 fps, H.264 + AAC, −14,0 LUFS / −1,0 dBFS, 8,1% congelado fora da placa de CTA.
