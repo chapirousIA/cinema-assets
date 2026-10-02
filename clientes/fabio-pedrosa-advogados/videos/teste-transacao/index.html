@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Newsreader"; src: url("assets/fonts/newsreader-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+      @font-face { font-family: "Newsreader"; src: url("assets/fonts/newsreader-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-latin-300-normal.woff2") format("woff2"); font-weight: 300; }
+      @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+
+      :root { --navy: #0f2c3c; --deep: #081a24; --terra: #b97047; --laranja: #e8631c; --creme: #f3ece4; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--navy); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Outfit", sans-serif; color: var(--creme); }
+      .bg { position: absolute; inset: 0; background: radial-gradient(110% 70% at 50% 42%, #174a66 0%, var(--navy) 52%, var(--deep) 100%); }
+      svg.waves { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .layer { position: absolute; inset: 0; }
+      #three-wrap { position: absolute; inset: 0; opacity: 0; }
+      #three-layer { width: 100%; height: 100%; display: block; }
+
+      .kicker { position: absolute; left: 96px; font-weight: 600; font-size: 30px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--laranja); }
+      .h1 { position: absolute; left: 96px; right: 96px; font-family: "Newsreader", serif; font-size: 108px; line-height: 1.02; letter-spacing: -0.02em; }
+      .h1 em, .h2 em { font-style: italic; color: #cf8a5f; }
+      .h2 { position: absolute; left: 96px; right: 96px; font-family: "Newsreader", serif; font-size: 84px; line-height: 1.05; letter-spacing: -0.015em; }
+      .w { display: inline-block; }
+      .note { position: absolute; left: 96px; right: 96px; font-weight: 300; font-size: 31px; line-height: 1.38; color: var(--creme); opacity: 0.9; }
+      .note b { font-weight: 600; opacity: 1; }
+
+      /* CDA (objeto condutor) */
+      .cda { position: absolute; width: 560px; height: 360px; padding: 34px 38px; background: var(--creme); color: var(--navy);
+             border-radius: 6px; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+      .cda .t { font-weight: 600; font-size: 22px; letter-spacing: 0.18em; }
+      .cda .s { font-weight: 400; font-size: 18px; opacity: .65; margin-top: 8px; letter-spacing: .06em; }
+      .cda .ln { height: 12px; border-radius: 6px; background: rgba(15,44,60,.14); margin-top: 18px; }
+      .cda .seal { position: absolute; right: 34px; bottom: 30px; width: 86px; height: 86px; border-radius: 50%; border: 3px solid var(--terra);
+                   display: flex; align-items: center; justify-content: center; font-family: "Newsreader", serif; font-style: italic; font-size: 26px; color: var(--terra); }
+      .pile .cda { width: 300px; height: 190px; padding: 20px 22px; }
+      .pile .cda .t { font-size: 13px; } .pile .cda .s { font-size: 11px; } .pile .cda .ln { height: 8px; margin-top: 11px; }
+      .pile .cda .seal { width: 48px; height: 48px; font-size: 15px; right: 18px; bottom: 16px; border-width: 2px; }
+
+      /* cena 2 rótulos */
+      .label { position: absolute; left: 800px; width: 270px; font-weight: 600; font-size: 40px; }
+      .label span { display: block; font-weight: 300; font-size: 28px; opacity: 0.85; margin-top: 2px; }
+      .label::before { content: ""; position: absolute; left: -64px; top: 23px; width: 48px; height: 2px; background: var(--terra); }
+      .tag { display: inline-block; white-space: nowrap; margin-top: 10px; padding: 6px 10px; font-weight: 600; font-size: 21px; letter-spacing: .02em; text-transform: uppercase; border-radius: 3px; }
+      .tag.off { background: var(--laranja); color: #fff; }
+      .tag.lock { border: 2px solid var(--creme); color: var(--creme); }
+
+      /* cena 3 dados */
+      .big { position: absolute; font-family: "Newsreader", serif; font-size: 170px; line-height: 1; letter-spacing: -0.03em; color: var(--creme); }
+      .big small { font-family: "Newsreader", serif; font-style: italic; font-size: 92px; letter-spacing: -0.01em; color: #cf8a5f; margin-right: 18px; }
+      .cap { position: absolute; font-weight: 300; font-size: 34px; line-height: 1.3; }
+      .cap b { font-weight: 600; color: var(--creme); }
+      .dot { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: var(--terra); }
+
+      /* cena 4 método */
+      .step { position: absolute; left: 290px; right: 80px; }
+      .step .n { font-family: "Newsreader", serif; font-style: italic; font-size: 34px; color: var(--laranja); }
+      .step .t { font-weight: 600; font-size: 48px; margin-top: 4px; }
+      .step .d { font-weight: 300; font-size: 33px; opacity: .85; margin-top: 6px; }
+      .node { position: absolute; left: 136px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--terra); background: var(--navy); }
+      .node i { position: absolute; inset: 5px; border-radius: 50%; background: var(--laranja); }
+      .pulse { position: absolute; left: 136px; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--laranja); opacity: 0; }
+      .cta div { position: relative; overflow: hidden; }
+      #shine { position: absolute; top: 0; bottom: 0; left: 0; width: 120px; background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); }
+      #mini { position: absolute; left: 60px; top: 0; width: 180px; height: 116px; }
+      #mini .cda { width: 180px; height: 116px; padding: 14px 16px; box-shadow: 0 10px 24px rgba(0,0,0,.4); }
+      #mini .cda .t { font-size: 10px; letter-spacing: .1em; } #mini .cda .ln { height: 7px; margin-top: 10px; }
+
+      /* cena 5 marca */
+      #flip { position: absolute; left: 220px; top: 620px; width: 640px; height: 410px; }
+      #flip { transform-style: preserve-3d; }
+      #flip .back { transform: rotateY(180deg); }
+      #flip .face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 8px; }
+      #flip .front { background: var(--creme); }
+      #flip .back { background: var(--creme); box-shadow: 0 30px 70px rgba(0,0,0,.4);
+                    display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .brand { font-family: "Newsreader", serif; font-size: 82px; color: var(--navy); margin-top: 18px; }
+      .brand-sub { font-weight: 600; font-size: 24px; letter-spacing: .34em; color: #9a5a35; margin-top: 16px; }
+      .oab { font-weight: 400; font-size: 24px; letter-spacing: .08em; color: var(--navy); opacity: .8; margin-top: 14px; }
+      .cta { position: absolute; left: 0; right: 0; top: 1130px; display: flex; justify-content: center; }
+      .cta div { padding: 32px 60px; background: var(--laranja); color: #fff; font-weight: 600; font-size: 42px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="25" data-width="1080" data-height="1920">
+      <div class="bg"></div>
+      <svg class="waves" viewBox="0 0 1080 1920" preserveAspectRatio="none"></svg>
+      <div id="three-wrap"><canvas id="three-layer"></canvas></div>
+
+      <!-- CENA 1: gancho -->
+      <div class="layer" id="s1">
+        <div class="pile" id="pile" data-layout-allow-overlap></div>
+        <div class="kicker" id="k1" style="top: 330px">Transação Tributária · Lei nº 13.988/2020</div>
+        <div class="h1" id="h1" style="top: 400px"><span class="w">Débito</span> <span class="w">inscrito</span> <span class="w">em</span> <em class="w">dívida</em> <em class="w">ativa</em> <span class="w">da</span> <span class="w">União?</span></div>
+        <div class="cda" id="cda" data-layout-allow-overlap style="left: 260px; top: 960px">
+          <div class="t" data-layout-allow-overlap>CERTIDÃO DE DÍVIDA ATIVA</div>
+          <div class="s" data-layout-allow-overlap>UNIÃO · CRÉDITO INSCRITO</div>
+          <div class="ln" style="width: 92%; margin-top: 34px"></div><div class="ln" style="width: 78%"></div><div class="ln" style="width: 85%"></div><div class="ln" style="width: 52%"></div>
+          <div class="seal">CDA</div>
+        </div>
+      </div>
+
+      <!-- CENA 2: 3D -->
+      <div class="layer" id="s2">
+        <div class="kicker" style="top: 300px">Anatomia do débito</div>
+        <div class="h2" id="h2" style="top: 360px">O que compõe <em>a dívida</em></div>
+        <div class="label" id="l3" style="top: 688px">Encargos<span>legais da inscrição</span><div class="tag off">desconto possível</div></div>
+        <div class="label" id="l2" style="top: 878px">Juros<span>Selic acumulada</span><div class="tag off">desconto possível</div></div>
+        <div class="label" id="l1" style="top: 1068px">Multa<span>de ofício ou de mora</span><div class="tag off">desconto possível</div></div>
+        <div class="label" id="l0" style="top: 1258px">Principal<span>tributo originário</span><div class="tag lock">não é reduzido</div></div>
+        <div class="note" id="n2" style="top: 1452px">Descontos só em multa, juros e encargos de créditos irrecuperáveis ou de difícil recuperação. <b>Lei nº 13.988/2020, art. 11, I e §2º, I.</b></div>
+      </div>
+
+      <!-- CENA 3: teto legal -->
+      <div class="layer" id="s3">
+        <div class="kicker" id="k3" style="top: 330px">Teto legal · PF, ME e EPP</div>
+        <svg id="ring" style="position:absolute; left:96px; top:420px" width="330" height="330" viewBox="0 0 330 330">
+          <circle cx="165" cy="165" r="140" fill="none" stroke="rgba(243,236,228,.14)" stroke-width="18" />
+          <circle id="arc" cx="165" cy="165" r="140" fill="none" stroke="#e8631c" stroke-width="18" stroke-linecap="round"
+                  transform="rotate(-90 165 165)" stroke-dasharray="879.6" stroke-dashoffset="879.6" />
+        </svg>
+        <div class="big" id="pct" style="left: 460px; top: 470px"><small>até</small><span id="pctv">0</span>%</div>
+        <div class="cap" id="pctcap" style="left: 460px; top: 655px; width: 530px">de redução máxima do total, aplicada <b>só sobre multa, juros e encargos</b></div>
+        <div id="grid" style="position:absolute; left:96px; top:1120px; width:900px; height:160px"></div>
+        <div class="big" id="mes" style="left: 96px; top: 880px"><small>até</small><span id="mesv">0</span></div>
+        <div class="cap" id="mescap" style="left: 600px; top: 915px; width: 400px">meses de prazo — <b>contribuições previdenciárias: até 60</b></div>
+        <div class="note" id="n3" style="top: 1350px">Limites máximos, não garantia: o desconto e o prazo efetivos dependem da modalidade e da capacidade de pagamento. <b>Lei nº 13.988/2020, art. 11, §3º (red. Lei nº 14.375/2022); CF, art. 195, §11.</b></div>
+      </div>
+
+      <!-- CENA 4: método -->
+      <div class="layer" id="s4">
+        <div class="kicker" id="k4" style="top: 330px">Como trabalhamos</div>
+        <svg style="position:absolute; inset:0" width="1080" height="1920">
+          <line id="track" x1="150" y1="470" x2="150" y2="1330" stroke="rgba(185,112,71,.8)" stroke-width="3" stroke-dasharray="860" stroke-dashoffset="860" />
+        </svg>
+        <div class="node" id="nd0" style="top: 556px"><i></i></div>
+        <div class="node" id="nd1" style="top: 856px"><i></i></div>
+        <div class="node" id="nd2" style="top: 1156px"><i></i></div>
+        <div class="pulse" id="pu1" style="top: 1156px"></div><div class="pulse" id="pu2" style="top: 1156px"></div>
+        <div class="step" id="st0" style="top: 520px"><div class="n">01</div><div class="t">Diagnóstico do passivo</div><div class="d">Inscrições, fases e garantias</div></div>
+        <div class="step" id="st1" style="top: 820px"><div class="n">02</div><div class="t">Enquadramento</div><div class="d">Modalidade adequada ao perfil</div></div>
+        <div class="step" id="st2" style="top: 1120px"><div class="n">03</div><div class="t">Estratégia</div><div class="d">Proposta, adesão ou defesa</div></div>
+        <div id="mini"><div class="cda"><div class="t">CERTIDÃO DE DÍVIDA ATIVA</div><div class="ln" style="width:90%; margin-top:10px"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:80%"></div></div></div>
+      </div>
+
+      <!-- CENA 5: marca -->
+      <div class="layer" id="s5">
+        <div id="flip" data-layout-allow-overlap>
+          <div class="face front cda" style="position:absolute; inset:0; width:auto; height:auto">
+            <div class="t">CERTIDÃO DE DÍVIDA ATIVA</div><div class="s">UNIÃO · CRÉDITO INSCRITO</div>
+            <div class="ln" style="width: 92%; margin-top: 34px"></div><div class="ln" style="width: 78%"></div><div class="ln" style="width: 85%"></div>
+            <div class="seal">CDA</div>
+          </div>
+          <div class="face back" id="back">
+            <svg width="150" height="60" viewBox="0 0 150 60" fill="none" stroke="#b97047" stroke-width="3" stroke-linecap="round">
+              <path d="M5 15 Q 23 3 41 15 T 77 15 T 113 15 T 145 15" /><path d="M5 30 Q 23 18 41 30 T 77 30 T 113 30 T 145 30" stroke="#e8631c" /><path d="M5 45 Q 23 33 41 45 T 77 45 T 113 45 T 145 45" />
+            </svg>
+            <div class="brand">Fábio Pedrosa</div>
+            <div class="brand-sub">ADVOGADOS · TRIBUTÁRIO</div>
+            <div class="oab">OAB/CE nº [PREENCHER]</div>
+          </div>
+        </div>
+        <div class="cta" id="cta"><div>Agende uma análise<span id="shine"></span></div></div>
+        <div class="note" id="n5" style="top: 1330px; text-align: center">Conteúdo informativo. Não constitui promessa de resultado. Condições dependem de edital ou portaria vigente e da análise individual do caso.</div>
+      </div>
+
+      <!-- ÁUDIO: trilha provisória + SFX abaixo da música -->
+      <audio id="music" src="assets/audio/trilha-provisoria.mp3" data-start="0" data-duration="25" data-track-index="10" data-volume="0.55"></audio>
+      <audio id="sfx-whoosh" src="assets/sfx/whoosh.mp3" data-start="3.25" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="sfx-click" src="assets/sfx/click-soft.mp3" data-start="7.2" data-track-index="12" data-volume="0.2"></audio>
+      <audio id="sfx-ping" src="assets/sfx/ping.mp3" data-start="13.4" data-track-index="13" data-volume="0.14"></audio>
+      <audio id="sfx-whoosh2" src="assets/sfx/whoosh-short.mp3" data-start="15.45" data-track-index="14" data-volume="0.18"></audio>
+      <audio id="sfx-chime" src="assets/sfx/chime.mp3" data-start="21.6" data-track-index="15" data-volume="0.16"></audio>
+    </div>
+
+    <script type="module">
+      import * as THREE from "./assets/vendor/three.module.js";
+
+      const W = 1080, H = 1920;
+      const clamp = (x) => Math.min(1, Math.max(0, x));
+      const outExpo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
+      const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+      const lerp = (a, b, p) => a + (b - a) * p;
+
+      // ---------- fundo: ondas (símbolo) ----------
+      const svg = document.querySelector("svg.waves");
+      let seed = 11;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const waves = Array.from({ length: 12 }, (_, i) => ({ y: 160 + i * 140, amp: 16 + rnd() * 30, fq: 1.1 + rnd() * 1.3, ph: rnd() * 6.28, sp: 0.25 + rnd() * 0.3, op: 0.08 + rnd() * 0.12, c: i % 4 === 1 ? "#e8631c" : "#b97047" }));
+      svg.innerHTML = waves.map((w) => `<path fill="none" stroke="${w.c}" stroke-width="1.6"/>`).join("");
+      const wavePaths = [...svg.querySelectorAll("path")];
+
+      // ---------- 3D: pilha do débito ----------
+      const canvas = document.getElementById("three-layer");
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(W, H, false);
+      renderer.setPixelRatio(1);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+      scene.add(new THREE.HemisphereLight(0xfff4e8, 0x0b2230, 1.6));
+      const key = new THREE.DirectionalLight(0xffffff, 1.4);
+      key.position.set(4, 6, 5);
+      scene.add(key);
+      const baseColors = [0xf3ece4, 0xb97047, 0xc98a62, 0xe8631c];
+      const layers = baseColors.map((c) => {
+        const m = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.26, 1.7), new THREE.MeshStandardMaterial({ color: c, roughness: 0.55, metalness: 0.05 }));
+        m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), new THREE.LineBasicMaterial({ color: 0x0f2c3c })));
+        scene.add(m);
+        return m;
+      });
+      const dim = new THREE.Color(0x3a4d58);
+
+      // ---------- grade de 145 parcelas ----------
+      const grid = document.getElementById("grid");
+      const dots = [];
+      for (let i = 0; i < 145; i++) {
+        const d = document.createElement("div");
+        d.className = "dot";
+        d.style.left = (i % 29) * 31 + "px";
+        d.style.top = Math.floor(i / 29) * 31 + "px";
+        grid.appendChild(d);
+        dots.push(d);
+      }
+
+      function renderAt(t) {
+        // ondas
+        waves.forEach((w, i) => {
+          let d = "";
+          for (let x = -20; x <= 1100; x += 24) {
+            const y = w.y + Math.sin((x / 1080) * Math.PI * 2 * w.fq + w.ph + t * w.sp * 2) * w.amp - t * 6;
+            d += (x === -20 ? "M" : "L") + x + " " + y.toFixed(1);
+          }
+          wavePaths[i].setAttribute("d", d);
+          wavePaths[i].setAttribute("opacity", (w.op * clamp(t / 1.0)).toFixed(3));
+        });
+
+        // 3D (cena 2: 3,4–10,6 s)
+        const lt = t - 3.4;
+        if (lt > -0.1 && lt < 7.4) {
+          const open = inOut(clamp((lt - 0.9) / 1.8));
+          const squeeze = inOut(clamp((t - 7.2) / 1.0));
+          layers.forEach((m, i) => {
+            const enter = outExpo(clamp((lt - 0.05 - i * 0.12) / 0.9));
+            const bob = Math.sin(lt * 2.1 + i * 0.9) * 0.035 * open;
+            m.position.set(0, -1.3 + i * 0.28 + open * i * 0.42 + (1 - enter) * 2.2 + bob, 0);
+            m.rotation.y = 0.95 + lt * 0.05;
+            m.visible = enter > 0.001;
+            m.material.opacity = 1;
+            if (i > 0) {
+              m.scale.set(1 - squeeze * 0.12, 1 - squeeze * 0.62, 1 - squeeze * 0.12);
+              m.material.color.setHex(baseColors[i]).lerp(dim, squeeze * 0.55);
+            }
+          });
+          const cam = inOut(clamp(lt / 3.2));
+          const back = inOut(clamp((t - 9.6) / 1.0)); // recua na saída
+          camera.position.set(4.6 - cam * 0.5, 3.4 - cam * 0.5 + back * 1.5, 13.5 - cam * 1.0 + back * 7);
+          camera.lookAt(0.55, -0.12, 0);
+          renderer.render(scene, camera);
+        }
+
+        // contadores (cena 3)
+        const p = outExpo(clamp((t - 11.0) / 1.6));
+        document.getElementById("pctv").textContent = Math.round(70 * p);
+        document.getElementById("arc").setAttribute("stroke-dashoffset", (879.6 * (1 - 0.7 * p)).toFixed(1));
+        const q = clamp((t - 12.0) / 1.5);
+        document.getElementById("mesv").textContent = Math.round(145 * outExpo(q));
+        const lit = Math.floor(145 * q);
+        const wave = clamp((t - 13.3) / 0.4);
+        dots.forEach((d, i) => {
+          d.style.opacity = i < lit ? 1 : 0.18;
+          const col = i % 29;
+          const k = wave * Math.max(0, Math.sin(t * 4.2 - col * 0.32));
+          d.style.transform = `scale(${(1 + 0.45 * k).toFixed(3)})`;
+          d.style.background = k > 0.6 ? "#e8631c" : "#b97047";
+        });
+      }
+      window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+      renderAt(window.__hfThreeTime || 0);
+    </script>
+
+    <script>
+      // pilha de CDAs da cena 1 (posições fixas, sem aleatoriedade em tempo de render)
+      const pile = document.getElementById("pile");
+      const spots = [[90, 1070, -14], [700, 1040, 11], [400, 1190, -5], [150, 1320, 8], [640, 1290, -9], [380, 1360, 13], [20, 900, 18]];
+      spots.forEach(([x, y]) => {
+        const c = document.createElement("div");
+        c.className = "cda pcard";
+        c.style.left = x + "px";
+        c.style.top = y + "px";
+        c.setAttribute("aria-hidden", "true");
+        c.innerHTML = '<div class="ln" style="width:60%; height:10px; background:rgba(15,44,60,.35)"></div><div class="ln" style="width:90%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:80%"></div><div class="seal"></div>';
+        pile.appendChild(c);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      const E = "expo.out";
+
+      // estado inicial das cenas 2–5
+      tl.set(["#s2", "#s3", "#s4", "#s5"], { opacity: 0 }, 0);
+
+      // ===== CENA 1 (0–3,5) =====
+      tl.fromTo("#k1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.0)
+        .fromTo("#h1 .w", { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, duration: 0.8, ease: E, stagger: 0.07 }, 0.05)
+        .fromTo(".pcard", { opacity: 0, y: -260, rotation: (i) => spots[i][2] * 2 }, { opacity: 0.55, y: 0, rotation: (i) => spots[i][2], duration: 1.0, ease: "power3.out", stagger: 0.06 }, 0.0)
+        .fromTo("#cda", { opacity: 0, y: 140, rotation: -4 }, { opacity: 1, y: 0, rotation: -2, duration: 0.9, ease: "back.out(1.4)" }, 0.55)
+        .to("#cda", { scale: 1.06, y: -24, rotation: -1, duration: 1.3, ease: "none" }, 1.45)
+        .to("#pile", { y: 30, duration: 2.0, ease: "none" }, 0.8)
+        // a CDA avança contra a câmera e vira a transição
+        .to("#cda", { x: -130, y: 70, rotationX: 64, rotation: 22, scale: 0.62, transformPerspective: 1400, duration: 0.7, ease: "power3.inOut" }, 2.75)
+        .to(["#k1", "#h1", ".pcard"], { opacity: 0, y: -50, duration: 0.45, ease: "power2.in" }, 2.8)
+        .to("#cda", { opacity: 0, duration: 0.25, ease: "none" }, 3.4)
+        .set("#s1", { opacity: 0 }, 3.55);
+
+      // ===== CENA 2 (3,4–10,6) =====
+      tl.to("#three-wrap", { opacity: 1, duration: 0.25, ease: "none" }, 3.3)
+        .set("#s2", { opacity: 1 }, 3.4)
+        .fromTo("#s2 .kicker", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.6)
+        .fromTo("#h2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: E }, 3.7)
+        .fromTo(["#l3", "#l2", "#l1", "#l0"], { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", stagger: 0.14 }, 6.25)
+        .fromTo(".label .tag", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.1 }, 7.25)
+        .fromTo("#n2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, 7.7)
+        .to(["#s2 .kicker", "#h2", ".label", "#n2"], { opacity: 0, y: -90, duration: 0.4, ease: "power3.in", stagger: 0.03 }, 9.85)
+        .to("#three-wrap", { opacity: 0, duration: 0.6, ease: "power1.in" }, 9.9)
+        .set("#s2", { opacity: 0 }, 10.6);
+
+      // ===== CENA 3 (10,4–15,6) =====
+      tl.set("#s3", { opacity: 1 }, 10.1)
+        .fromTo("#k3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 10.25)
+        .fromTo("#ring", { opacity: 0, scale: 2.4, x: 160, y: 520, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.9, ease: E }, 10.15)
+        .fromTo("#pct", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 10.55)
+        .fromTo("#pctcap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 11.3)
+        .fromTo("#grid", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 11.7)
+        .fromTo("#mes", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 11.9)
+        .fromTo("#mescap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 12.4)
+        .fromTo("#n3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, 13.0)
+        .to(["#k3", "#ring", "#pct", "#pctcap", "#mes", "#mescap", "#n3"], { opacity: 0, y: -110, duration: 0.4, ease: "power3.in", stagger: 0.025 }, 15.1)
+        .to("#grid", { scaleX: 0.04, x: -380, y: -560, transformOrigin: "0% 50%", opacity: 0, duration: 0.55, ease: "power3.inOut" }, 15.15)
+        .set("#s3", { opacity: 0 }, 15.8);
+
+      // ===== CENA 4 (15,5–21,0) =====
+      tl.set("#s4", { opacity: 1 }, 15.5)
+        .fromTo("#k4", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 15.55)
+        .fromTo("#mini", { opacity: 0, y: 400, rotation: -8 }, { opacity: 1, y: 440, rotation: 0, duration: 0.5, ease: "power3.out" }, 15.6)
+        .fromTo(".step", { opacity: 0, x: 50 }, { opacity: 0.38, x: 0, duration: 0.6, ease: E, stagger: 0.08 }, 15.65)
+        .fromTo(".node", { opacity: 0, scale: 0.3 }, { opacity: 0.35, scale: 0.7, duration: 0.5, ease: E, stagger: 0.08 }, 15.7)
+        .to("#track", { strokeDashoffset: 0, duration: 3.6, ease: "power1.inOut" }, 16.0)
+        .to("#mini", { y: 1280, duration: 3.6, ease: "power1.inOut" }, 16.0);
+      [0, 1, 2].forEach((k) => {
+        const at = 16.0 + [0.55, 1.75, 2.95][k];
+        tl.to(`#nd${k}`, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.5)" }, at)
+          .to(`#st${k}`, { opacity: 1, duration: 0.35, ease: "power2.out" }, at)
+          .fromTo(`#st${k} .t`, { x: 0 }, { x: 14, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.out" }, at);
+      });
+      tl.fromTo(["#pu1", "#pu2"], { scale: 1, opacity: 0.7 }, { scale: 3.2, opacity: 0, duration: 0.9, ease: "power2.out", stagger: 0.45 }, 19.15)
+        .to("#mini", { rotation: 4, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 19.2);
+      tl.to(["#k4", "#track", ".node", ".step"], { opacity: 0, x: -30, duration: 0.35, ease: "power2.in" }, 20.2)
+        .to("#mini", { x: 390, y: 767, scale: 2.2, rotation: 0, duration: 0.5, ease: "power3.inOut" }, 20.45)
+        .to("#mini", { opacity: 0, duration: 0.15, ease: "none" }, 20.95)
+        .set("#s4", { opacity: 0 }, 21.1);
+
+      // ===== CENA 5 (21,0–25) =====
+      tl.set("#s5", { opacity: 1 }, 20.95)
+        .fromTo("#flip", { opacity: 0, scale: 0.62, rotationY: 0, transformPerspective: 1600 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 20.95)
+        .to("#flip", { rotationY: 180, duration: 1.0, ease: "power3.inOut" }, 21.35)
+        .fromTo("#cta", { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.7)" }, 22.25)
+        .fromTo("#n5", { opacity: 0 }, { opacity: 0.92, duration: 0.8, ease: "none" }, 22.7)
+        .fromTo("#shine", { x: -160 }, { x: 560, duration: 0.9, ease: "power2.inOut", repeat: 1, repeatDelay: 0.6 }, 22.9)
+        .fromTo("#cta", { scale: 1 }, { scale: 1.03, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 1 }, 23.0)
+        .fromTo("#flip", { y: 0 }, { y: -12, duration: 2.3, ease: "sine.inOut" }, 22.6);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -3,6 +3,7 @@ motion/out/
 # projetos de vídeo: saídas e cópias locais de libs/fontes (recriadas por tools/vendor-sync.sh)
 clientes/**/renders/
 clientes/**/snapshots/
+clientes/**/review/
 clientes/**/assets/vendor/
 clientes/**/assets/fonts/
 clientes/**/.hyperframes/
