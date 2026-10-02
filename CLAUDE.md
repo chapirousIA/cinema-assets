@@ -7,7 +7,12 @@ Três funções:
 
 ## Para qualquer pedido de vídeo
 Siga a skill **`video-agencia`** (`.claude/skills/video-agencia/SKILL.md`) — processo, padrão de qualidade e compliance OAB.
-Sintaxe de composição: skills oficiais `/hyperframes`, `/hyperframes-core`, `/hyperframes-animation` (instaladas em `~/.claude/skills` pelo hook).
+Sintaxe de composição: skills oficiais `/hyperframes`, `/hyperframes-core`, `/hyperframes-animation` (plugin `hyperframes@hyperframes`).
+
+Outros kits instalados:
+- **Remotion** (vídeo em React): skills `remotion-*` em `.claude/skills` (`npx skills add remotion-dev/skills`, lock em `skills-lock.json`).
+- **Claude Animation** (2D com aparência desenhada, sem navegador): plugin `claude-animation@claude-animation-skill`.
+- Repositórios de referência (não versionados): `repos/` — PDoomVideo, ClaudeAnimationBase, claude-animation-skill, hyperframes, Battle-of-Austerlitz-Film, awesome-ai-motion, awesome-opus-5-5-videos.
 
 ## Estrutura
 - `clientes/<cliente>/` — `brief.md`, `brand/`, `footage/` (mídia pesada fora do git), `refs/`, `videos/<projeto-hyperframes>/`
@@ -29,6 +34,7 @@ Contrato: `defineScene()` / `window.seek(t)` em `motion/lib/scene.js`; marca em 
 
 ## Ambiente (container web)
 - CDNs (jsdelivr etc.) são bloqueadas: use sempre as cópias locais em `assets/vendor` e `assets/fonts` (`tools/vendor-sync.sh`).
-- Hook SessionStart instala ffmpeg (apt), deps npm, Chrome headless do HyperFrames e as skills oficiais.
+- Hook SessionStart instala ffmpeg (apt), deps npm, Chrome headless do HyperFrames e reinstala os plugins declarados em `.claude/settings.json` (escopo de usuário some ao reciclar o container).
+- CLI `hyperframes` fixado em 0.8.107, mesma versão do plugin.
 - Playwright 1.56.1 fixado para o Chromium de `/opt/pw-browsers` (não rodar `playwright install`).
 - Replicate/ElevenLabs/Telegram exigem liberar os domínios na política de rede do ambiente e chaves como variáveis de ambiente.

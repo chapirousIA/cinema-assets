@@ -18,8 +18,18 @@ npm install --no-audit --no-fund --loglevel=error || log "AVISO: npm install fal
 npx --no-install hyperframes telemetry disable >/dev/null 2>&1 || true
 npx --no-install hyperframes browser ensure >/dev/null 2>&1 || log "AVISO: hyperframes browser ensure falhou"
 
-# 4. skills oficiais do HyperFrames/GSAP em ~/.claude/skills (31 MB, por isso não versionadas)
-[ -d "$HOME/.claude/skills/hyperframes" ] || npx --no-install hyperframes skills >/dev/null 2>&1 || log "AVISO: instalação das skills HyperFrames falhou"
+# 4. plugins (escopo do usuário some quando o container é reciclado; declarados em .claude/settings.json)
+#    hyperframes@hyperframes (skills oficiais HyperFrames/GSAP) e claude-animation@claude-animation-skill
+if command -v claude >/dev/null; then
+  installed="$(claude plugin list 2>/dev/null)"
+  for spec in "heygen-com/hyperframes hyperframes@hyperframes" "buildwithhanif/claude-animation-skill claude-animation@claude-animation-skill"; do
+    set -- $spec
+    if ! grep -q "$2" <<<"$installed"; then
+      claude plugin marketplace add "$1" >/dev/null 2>&1; claude plugin install "$2" >/dev/null 2>&1 || log "AVISO: falha ao instalar plugin $2"
+    fi
+  done
+fi
+# skills do Remotion ficam versionadas em .claude/skills (npx skills add remotion-dev/skills; lock em skills-lock.json)
 
 # 5. libs e fontes locais em cada projeto de vídeo (ignoradas pelo git)
 tools/vendor-sync.sh >/dev/null 2>&1 || log "AVISO: vendor-sync falhou"
