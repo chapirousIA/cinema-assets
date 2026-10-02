@@ -17,14 +17,14 @@ LAYOUTS = {
   .h1 { left: 96px; right: 96px; top: 390px; font-size: 104px; }
   .h2 { left: 96px; right: 96px; top: 345px; font-size: 80px; }
   #counter { left: 96px; top: 620px; }
-  .cap { left: 96px; right: 96px; top: 1410px; }
-  .cta { top: 1105px; } #n4 { left: 96px; right: 96px; top: 1290px; }
+  .cap { left: 96px; right: 130px; top: 1410px; }
+  .cta { top: 1105px; } #n4 { left: 110px; right: 130px; top: 1290px; }
 """,
     ),
     "16x9/index.html": dict(
         res="landscape", W=1920, H=1080,
-        hgX=1460, hgY=470, camDist=9.2,
-        x0=140, yrPx=160, lineY=880,
+        hgX=1460, hgY=430, camDist=10.2,
+        x0=140, yrPx=270, lineY=940,
         travW=140, travH=90,
         autosL=1180, autosT=330, autosW=560, autosH=360,
         flipCX=960, flipCY=400, flipW=640, flipH=410, ctaW=720, rewTop=245, rewLeft=140,
@@ -33,7 +33,8 @@ LAYOUTS = {
   .h1 { left: 140px; width: 940px; top: 355px; font-size: 92px; }
   .h2 { left: 140px; width: 1060px; top: 150px; font-size: 76px; }
   #counter { left: 140px; top: 300px; }
-  .cap { left: 140px; width: 900px; top: 610px; }
+  .cap { left: 140px; width: 980px; top: 585px; }
+  .cap .p { font-size: 42px; }
   .cta { top: 680px; } #n4 { left: 360px; right: 360px; top: 820px; }
 """,
     ),
@@ -82,6 +83,7 @@ TEMPLATE = Template(r"""<!doctype html>
   .mini .ln { height: 6px; border-radius: 3px; background: rgba(15,44,60,.18); margin: 0 0 7px 22px; }
   .flipfront::before { width: 82px; }
   .flipfront .ln { height: 27px; border-radius: 14px; background: rgba(15,44,60,.18); margin: 0 0 32px 100px; }
+  .flipfront .ft { margin: 36px 0 34px 100px; font-weight: 600; font-size: 36px; letter-spacing: .16em; color: var(--navy); }
 
   /* relógio */
   #counter { position: absolute; }
@@ -146,7 +148,7 @@ $css
 
   <!-- marcador "autos" na linha do tempo (cenas 2–3) -->
   <div class="autos mini" id="trav" aria-hidden="true" style="left: ${x0}px; top: ${travTop}px">
-    <div style="height: 14px"></div><div class="ln" style="width: 60%"></div><div class="ln" style="width: 45%"></div><div class="ln" style="width: 52%"></div>
+    <div style="height: 8px"></div><div class="ln" style="width: 58%; height: 8px; background: rgba(15,44,60,.55)"></div><div class="ln" style="width: 60%"></div><div class="ln" style="width: 45%"></div><div class="ln" style="width: 52%"></div>
   </div>
 
   <!-- CENA 2: o relógio -->
@@ -182,7 +184,7 @@ $css
   <div class="layer" id="s4">
     <div id="flip" data-layout-allow-overlap>
       <div class="face autos flipfront" style="position: absolute; inset: 0">
-        <div style="height: 64px"></div><div class="ln" style="width: 60%"></div><div class="ln" style="width: 45%"></div><div class="ln" style="width: 52%"></div>
+        <div class="ft">EXECUÇÃO FISCAL</div><div class="ln" style="width: 52%"></div><div class="ln" style="width: 40%"></div><div class="ln" style="width: 46%"></div>
       </div>
       <div class="face back">
         <svg width="150" height="60" viewBox="0 0 150 60" fill="none" stroke="#b97047" stroke-width="3" stroke-linecap="round">

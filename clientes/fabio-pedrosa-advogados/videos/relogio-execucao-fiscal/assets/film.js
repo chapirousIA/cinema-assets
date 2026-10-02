@@ -15,7 +15,7 @@ const X0 = F.x0, YR = F.yrPx, LINE_Y = F.lineY;
 const xAt = (years) => X0 + years * YR;
 const MARK_YEARS = 3; // marco de citação/penhora efetiva (cena 3), em anos desde a suspensão
 const TRAV_CY = LINE_Y - 18 - F.travH / 2;          // centro vertical do marcador "autos"
-const TRAV_END_X = X0 + (MARK_YEARS + 3) * YR;      // posição final do marcador (t ≥ 19,2 s)
+const TRAV_END_X = X0 + 3 * YR;                    // posição final do marcador (t ≥ 19,2 s): 3 anos do novo ciclo
 F.autosToX = X0 - F.autosCX; F.autosToY = TRAV_CY - F.autosCY;
 F.travToX = F.flipCX - TRAV_END_X; F.travToY = F.flipCY - TRAV_CY;
 
@@ -33,7 +33,7 @@ export function clock(t) {
     else if (t < 13.75) { years = 6; A = 1; B = 0; }
     else if (t < 14.55) { const q = inOut(seg(t, 13.75, 14.55)); years = 6 - 3 * q; const p = 1 - 0.6 * q; A = p; B = 1 - p; } // volta no tempo até o 3º ano
     else if (t < 14.8) { years = 3; A = 0.6; B = 0.4; }
-    else if (t < 15.4) { const r = inOut(seg(t, 14.8, 15.4)); years = 3 * (1 - r); B = 0.4 + 0.6 * r; A = 0.6 * (1 - r); } // interrupção: zera
+    else if (t < 15.4) { const r = inOut(seg(t, 14.8, 15.4)); years = r < 0.35 ? 3 : 0; B = 0.4 + 0.6 * r; A = 0.6 * (1 - r); } // interrupção: zera (corte seco)
     else if (t < 15.6) { years = 0; B = 1; A = 0; }
     else { const p = seg(t, 15.6, 19.2); years = 3 * p; B = 1 - 0.6 * p; A = 0.6 * p; running = p > 0 && p < 1; }
   }
@@ -44,8 +44,8 @@ export function clock(t) {
 function travelerX(t) {
   const c = clock(t);
   if (t < 14.55) return xAt(c.years);           // 0 → 1 → 6 anos; depois volta ao 3º ano
-  if (t < 15.6) return xAt(MARK_YEARS);         // parado no marco da interrupção enquanto zera
-  return xAt(MARK_YEARS + c.years);             // novo prazo corre a partir do marco
+  if (t < 15.6) return lerp(xAt(MARK_YEARS), xAt(0), inOut(seg(t, 14.85, 15.45))); // volta ao início do ciclo
+  return xAt(c.years);                          // novo ciclo: suspensão de 1 ano + 5 anos, do começo
 }
 
 // ---------------- 3D: ampulheta ----------------
@@ -114,7 +114,8 @@ const _neck = new THREE.Vector3();
 function placeSand(mesh, sgn, amount, rot, S) {
   // sgn: +1 bulbo A, −1 bulbo B. O cone fica sempre "de pé" no mundo:
   // bulbo de cima = funil (ponta para baixo, junto ao gargalo); bulbo de baixo = monte (ponta para cima, no fundo).
-  const s = Math.cbrt(Math.max(0, amount));
+  const tilt = Math.abs(Math.sin(rot));          // 0 em pé, 1 deitada
+  const s = Math.sqrt(Math.max(0, amount)) * (1 - 0.75 * tilt);
   mesh.visible = s > 0.02;
   const k = Math.max(s, 0.001) * S;
   mesh.scale.setScalar(k);
@@ -122,14 +123,14 @@ function placeSand(mesh, sgn, amount, rot, S) {
   const isTop = upY > 0;
   const half = (CONE_H / 2) * s;
   const d = (isTop ? 0.1 + half : 1.17 - half) * S;
-  mesh.position.set(_neck.x + upX * d, _neck.y + upY * d, _neck.z);
+  mesh.position.set(_neck.x + upX * d, _neck.y + upY * d - 0.42 * S * tilt, _neck.z); // apoiada na parede inferior
   mesh.rotation.set(isTop ? Math.PI : 0, 0, 0);
   return { isTop, topY: mesh.position.y + (isTop ? -1 : 1) * half * S };
 }
 
 function render3D(t) {
   const c = clock(t);
-  const intro = outCubic(seg(t, 3.35, 4.2));
+  const intro = outCubic(seg(t, 3.05, 3.9));
   flipG.position.y = lerp(-0.6, 0, intro) + Math.sin(t * 1.3) * 0.03;
   const S = lerp(0.85, 1, intro);
   flipG.scale.setScalar(S);
@@ -187,7 +188,7 @@ function renderAt(t) {
     el.style.width = el.style.height = m.r.toFixed(1) + "px";
     el.style.opacity = (m.op * dustOn * (0.6 + 0.4 * Math.sin(t * 2 + m.ph))).toFixed(3);
   });
-  if (t > 3.2 && t < 20.6) render3D(t);
+  if (t > 2.95 && t < 20.6) render3D(t);
   const c = clock(t);
   const n = Math.floor(c.years + 1e-6);
   yearsEl.textContent = n;
@@ -228,18 +229,19 @@ tl.fromTo("#k1", { opacity: 0.35, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ea
   .set("#s1", { opacity: 0 }, 3.5);
 
 // CENA 2 — relógio (3,4–14)
-tl.to("#three-wrap", { opacity: 1, duration: 0.4, ease: "none" }, 3.35)
-  .set("#s2", { opacity: 1 }, 3.4)
+tl.to("#three-wrap", { opacity: 1, duration: 0.4, ease: "none" }, 3.05)
+  .set("#s2", { opacity: 1 }, 3.05)
   .fromTo("#k2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 3.45)
   .fromTo("#t2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 3.5)
-  .fromTo("#track", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.8, ease: "power3.inOut" }, 3.45)
-  .fromTo(".ms", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.12 }, 3.7)
+  .fromTo("#track", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.8, ease: "power3.inOut" }, 3.1)
+  .fromTo(".ms", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.12 }, 3.25)
+  .fromTo("#tl-labels", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, 3.3)
   .fromTo("#counter", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 3.8)
   .fromTo("#c1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 4.0)
   .to("#c1", { opacity: 0, y: -24, duration: 0.25, ease: "power2.in" }, 6.95)
   .fromTo("#c2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 7.22)
-  .to("#c2", { opacity: 0, y: -24, duration: 0.3, ease: "power2.in" }, 11.9)
-  .fromTo("#c3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 12.2)
+  .to("#c2", { opacity: 0, y: -24, duration: 0.28, ease: "power2.in" }, 12.12)
+  .fromTo("#c3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 12.42)
   .fromTo("#ms2", { scale: 1 }, { scale: 1.6, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 12.4)
   .fromTo("#presc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, 12.45)
   .fromTo("#counter", { scale: 1 }, { scale: 1.08, transformOrigin: "0% 50%", duration: 0.3, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 12.4);
@@ -252,14 +254,15 @@ tl.to(["#k2", "#t2", "#c3", "#presc"], { opacity: 0, y: -40, duration: 0.28, eas
   .fromTo("#c4", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 14.0)
   .fromTo("#mark", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.8)" }, 14.4)
   .fromTo("#ghost", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 14.55)
-  .fromTo("#yearsl", { opacity: 1 }, { opacity: 0, duration: 0.2, immediateRender: false }, 14.8)
-  .fromTo("#yearsl2", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, 15.0)
-  .fromTo("#counter", { scale: 1 }, { scale: 1.08, transformOrigin: "0% 50%", duration: 0.3, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 15.3)
+  .to(["#mark", "#ghost"], { opacity: 0, duration: 0.35, ease: "power1.in" }, 15.45)
+  .fromTo("#yearsl", { opacity: 1 }, { opacity: 0, duration: 0.15, immediateRender: false }, 14.85)
+  .fromTo("#yearsl2", { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: false }, 14.95)
+  .fromTo("#counter", { scale: 1 }, { scale: 1.1, transformOrigin: "0% 50%", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 14.98)
   .to("#c4", { opacity: 0, y: -24, duration: 0.3, ease: "power2.in" }, 17.3)
   .fromTo("#c5", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: E }, 17.45);
 
 // saída das cenas 2–3 e CENA 4 — marca (20–25)
-tl.to(["#t3", "#c5", "#counter", "#track", ".ms", "#mark", "#ghost", "#tl-labels"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in", stagger: 0.01 }, 19.85)
+tl.to(["#t3", "#c5", "#counter", "#track", ".ms", "#tl-labels"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in", stagger: 0.01 }, 19.85)
   .to("#three-wrap", { opacity: 0, duration: 0.35, ease: "power1.in" }, 19.9)
   .to("#trav", { x: F.travToX, y: F.travToY, scale: F.flipW / F.travW, duration: 0.5, ease: "power3.inOut" }, 19.95)
   .set("#trav", { opacity: 0 }, 20.45)

@@ -17,3 +17,15 @@
 | Cartão vazio parado 20,45–21,1 (média) | Giro do cartão logo na troca (20,5 s) |
 | 3D "barato": vidro facetado, funil escuro (média-alta) | Perfil do vidro suavizado (spline, 128 segmentos); luz de preenchimento por baixo; areia clara |
 | Texto pequeno (média) | Citações 30 px em tom mais claro; rótulos 26–29 px; aviso final peso 400 |
+
+## Rodada 2 — crítico independente (9:16 A: 7/10 · 16:9 B: 6/10) — textos jurídicos confirmados corretos
+| Achado (gravidade) | Correção |
+|---|---|
+| Nova contagem desenhada na escala antiga: "3 anos" com os autos sobre "+5 anos" (alta) | Interrupção manda os autos **de volta ao início do ciclo**; marco e trecho descartado somem; novo ciclo anda na mesma escala (3 anos = 3 anos) |
+| 16:9: autos sobre a citação do REsp (alta) e layout de retrato esticado (média) | Linha do tempo em largura total (270 px/ano) em y=940; ampulheta menor e mais alta; legenda 42 px |
+| Duas contagens regressivas seguidas (média) | Zeramento seco (3 → 0 com pulso do contador) |
+| Areia "teleporta" no meio do giro (média) | Areia se apoia na parede inferior e se espalha perto da horizontal; escala ~√volume |
+| Vazio em 3,2–3,4 s; autos pousam antes da linha (média) | Ampulheta e linha entram a partir de 3,05 s |
+| Cartão genérico vira a marca (baixa-média) | Frente do cartão com "EXECUÇÃO FISCAL"; mini-autos com barra de título |
+| Pontas de texto sob ícones do Reels (baixa) | Margem direita de 130 px nas legendas e no aviso |
+| Legenda do §4º entra com o contador em 5 (baixa) | Entra em 12,42 s (contador já em 6) |
